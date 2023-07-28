@@ -14,7 +14,8 @@ enum PaycellPosStatusCodeEnum {
   istanbulCardPaymentSuccessful(3008), // İSTANBUL KART ÖDEME BAŞARILI
   mkeSalesBankSuccessful(3016), // MKE satış banka başarılı
   installmentWar(3034), // Taksitli Savaş
-  successfulRefundProcess(200); // iade işleminde başarılı
+  successfulRefundProcess(200), // iade işleminde başarılı
+  successfulCancelProcess(3062); // iptal işleminde başarılı
 
   final int statusCode;
 
