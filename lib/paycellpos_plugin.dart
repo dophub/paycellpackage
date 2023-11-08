@@ -30,16 +30,23 @@ class PaycellposPlugin {
   factory PaycellposPlugin() => _instance ??= PaycellposPlugin._();
 
   Future<void> startAndCompleteOperation({
-    required PCSalesRequestModel startSalesOperationReq,
+    PCSalesRequestModel? startSalesOperationReqModel,
+    Map<String, dynamic>? startSalesOperationReqMap,
     VoidCallback? onPosBusy,
     VoidCallback? onPosNotInstalled,
     VoidCallback? onError,
     Function(PCSalesResponseModel, String)? onSuccess,
     Function(String?)? onNotSuccess,
   }) async {
+    assert(startSalesOperationReqModel != null || startSalesOperationReqMap != null);
+    startSalesOperationReqMap ??= startSalesOperationReqModel!.toJson();
+    final reqHeaderMap = startSalesOperationReqMap['header'];
+    String application = reqHeaderMap['application'];
+    String clientKey = reqHeaderMap['ClientKey'];
+    String transactionId = reqHeaderMap['transactionId'];
     final header = PCSalesHeaderModel(
-      clientKey: startSalesOperationReq.header.clientKey,
-      application: startSalesOperationReq.header.application,
+      application: application,
+      clientKey: clientKey,
     );
     try {
       if (!Platform.isAndroid) {
@@ -48,7 +55,7 @@ class PaycellposPlugin {
         return;
       }
 
-      final response = await PaycellposPluginPlatform.instance.startOperation(jsonEncode(startSalesOperationReq));
+      final response = await PaycellposPluginPlatform.instance.startOperation(jsonEncode(startSalesOperationReqMap));
       if (response == null) throw Exception();
 
       if (response == 'Mpos is busy.') {
@@ -69,7 +76,7 @@ class PaycellposPlugin {
       );
       if (result) {
         completeSalesOperation(header, 1);
-        onSuccess?.call(mPosSalesResultAsModel, startSalesOperationReq.header.transactionId);
+        onSuccess?.call(mPosSalesResultAsModel, transactionId);
       } else {
         completeSalesOperation(header, 2);
         onNotSuccess?.call(mPosSalesResultAsModel.operationResult!.resultCode);
