@@ -34,7 +34,7 @@ class PaycellposPlugin {
     Map<String, dynamic>? startSalesOperationReqMap,
     VoidCallback? onPosBusy,
     VoidCallback? onPosNotInstalled,
-    VoidCallback? onError,
+    Function(String)? onError,
     Function(PCSalesResponseModel, String)? onSuccess,
     Function(String?)? onNotSuccess,
   }) async {
@@ -83,7 +83,7 @@ class PaycellposPlugin {
       }
     } catch (e) {
       completeSalesOperation(header, 2);
-      onError?.call();
+      onError?.call(e.toString());
     }
   }
 
