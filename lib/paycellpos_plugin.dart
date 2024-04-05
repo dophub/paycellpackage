@@ -41,16 +41,17 @@ class PaycellposPlugin {
     assert(startSalesOperationReqModel != null || startSalesOperationReqMap != null);
     startSalesOperationReqMap ??= startSalesOperationReqModel!.toJson();
     final reqHeaderMap = startSalesOperationReqMap['header'];
-    String application = reqHeaderMap['application'];
-    String clientKey = reqHeaderMap['ClientKey'];
-    String transactionId = reqHeaderMap['transactionId'];
+    final String application = reqHeaderMap['application'];
+    final String clientKey = reqHeaderMap['ClientKey'];
+    final String transactionId = reqHeaderMap['transactionId'];
+    final String printSlip = startSalesOperationReqMap['PrintSlip'] ?? '1';
     final header = PCSalesHeaderModel(
       application: application,
       clientKey: clientKey,
     );
     try {
       if (!Platform.isAndroid) {
-        completeSalesOperation(header, 2);
+        completeSalesOperation(header, 2, printSlip);
         onPosNotInstalled?.call();
         return;
       }
@@ -59,13 +60,13 @@ class PaycellposPlugin {
       if (response == null) throw Exception();
 
       if (response == 'Mpos is busy.') {
-        completeSalesOperation(header, 2);
+        completeSalesOperation(header, 2, printSlip);
         onPosBusy?.call();
         return;
       }
 
       if (response == 'Mpos isn\'t installed.') {
-        completeSalesOperation(header, 2);
+        completeSalesOperation(header, 2, printSlip);
         onPosNotInstalled?.call();
         return;
       }
@@ -75,20 +76,24 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
-        completeSalesOperation(header, 1);
+        completeSalesOperation(header, 1, printSlip);
         onSuccess?.call(mPosSalesResultAsModel, transactionId);
       } else {
-        completeSalesOperation(header, 2);
+        completeSalesOperation(header, 2, printSlip);
         onNotSuccess?.call(mPosSalesResultAsModel.operationResult!.resultCode);
       }
     } catch (e) {
-      completeSalesOperation(header, 2);
+      completeSalesOperation(header, 2, printSlip);
       onError?.call(e.toString());
     }
   }
 
-  void completeSalesOperation(PCSalesHeaderModel header, int transactionResult) {
-    final model = PCCompleteSalesRequestModel(header: header, transactionResult: transactionResult);
+  void completeSalesOperation(PCSalesHeaderModel header, int transactionResult, String printSlip) {
+    final model = PCCompleteSalesRequestModel(
+      header: header,
+      transactionResult: transactionResult,
+      printSlip: printSlip,
+    );
     PaycellposPluginPlatform.instance.completeOperation(jsonEncode(model.toJson()));
   }
 }

@@ -4,10 +4,11 @@ class PCCompleteSalesRequestModel {
   PCCompleteSalesRequestModel({
     required this.header,
     required this.transactionResult,
+    required this.printSlip,
   });
 
   /// Slip basılıp basılmayacağı bilgisi bu alana set edilecek. “1”: slip basılacak , “2” :slip basılmayacak
-  String printSlip = '1';
+  String printSlip;
 
   /// Body'de gönderilecek header modeli
   PCSalesHeaderModel header;

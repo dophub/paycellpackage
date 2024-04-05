@@ -64,7 +64,7 @@ class PCSalesRequestModel {
   double totalKdvAmount;
 
   Map<String, dynamic> toJson() => {
-        "customer": customer == null ? null : customer!.toJson(),
+        "customer": customer?.toJson(),
         "DGPNo": dgpNo,
         "endTxnStatus": endTxnStatus,
         "header": header.toJson(),
