@@ -56,7 +56,10 @@ class PaycellposPlugin {
         return;
       }
 
-      final response = await PaycellposPluginPlatform.instance.startOperation(jsonEncode(startSalesOperationReqMap));
+      final reqJson = jsonEncode(startSalesOperationReqMap);
+      print('---->$reqJson');
+      final response = await PaycellposPluginPlatform.instance.startOperation(reqJson);
+      print('<----$response');
       if (response == null) throw Exception();
 
       if (response == 'Mpos is busy.') {
@@ -89,11 +92,15 @@ class PaycellposPlugin {
   }
 
   void completeSalesOperation(PCSalesHeaderModel header, int transactionResult, String printSlip) {
-    final model = PCCompleteSalesRequestModel(
-      header: header,
-      transactionResult: transactionResult,
-      printSlip: printSlip,
-    );
-    PaycellposPluginPlatform.instance.completeOperation(jsonEncode(model.toJson()));
+    try {
+      final model = PCCompleteSalesRequestModel(
+        header: header,
+        transactionResult: transactionResult,
+        printSlip: printSlip,
+      );
+      final String json = jsonEncode(model.toJson());
+      print('---->$json');
+      PaycellposPluginPlatform.instance.completeOperation(json).then((res) => print('<----$res'));
+    } catch (_) {}
   }
 }
