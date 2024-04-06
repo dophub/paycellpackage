@@ -20,7 +20,7 @@ class PCCompleteSalesRequestModel {
   int transactionResult;
 
   Map<String, dynamic> toJson() => {
-        'PrintSlip': printSlip,
+        // 'PrintSlip': printSlip,
         'header': header.toJson(),
         'slipEstimatedTime': slipEstimatedTime,
         'transactionResult': transactionResult,
