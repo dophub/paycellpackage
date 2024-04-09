@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:paycellpos_plugin/paycellpos_plugin_platform_interface.dart';
 import 'model/complete_sales_request_model.dart';
-import 'model/pc_sales_header_model.dart';
 import 'model/pc_sales_request_model.dart';
 import 'model/pc_sales_response_model.dart';
 
@@ -45,7 +44,7 @@ class PaycellposPlugin {
     final String clientKey = reqHeaderMap['ClientKey'];
     final String transactionId = reqHeaderMap['transactionId'];
     final String printSlip = startSalesOperationReqMap['PrintSlip'] ?? '1';
-    final header = PCSalesHeaderModel(
+    final header = PCHeaderForCompleteSalesModel(
       application: application,
       clientKey: clientKey,
     );
@@ -91,7 +90,7 @@ class PaycellposPlugin {
     }
   }
 
-  void completeSalesOperation(PCSalesHeaderModel header, int transactionResult, String printSlip) {
+  void completeSalesOperation(PCHeaderForCompleteSalesModel header, int transactionResult, String printSlip) {
     try {
       final model = PCCompleteSalesRequestModel(
         header: header,
