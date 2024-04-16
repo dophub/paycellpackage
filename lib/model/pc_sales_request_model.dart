@@ -13,6 +13,7 @@ class PCSalesRequestModel {
     required this.totalAmount,
     required this.totalKdvAmount,
     required this.dgpNo,
+    required this.printingOption,
   });
 
   /// 500 liranın üzerinde zorunlu, 500 liranın altında opsiyonel olarak verilmesi gereken müşteri bilgileri
@@ -63,6 +64,11 @@ class PCSalesRequestModel {
   ///  Toplam kdv tutarı. 100 ile çarpılarak gönderilecek
   double totalKdvAmount;
 
+  /// hengi sliplerin basılacağını belitmek için kullanılır
+  /// Bu alan gelmezse aşağıdaki alanlar false gelmiş olarak kabul edilir ve tüm slipler print edilir.
+  /// BKM dijital slip geliştirmesi kapsamında banka slipleri iletilmezse 2.Parametre dikkate alınmayacaktır.
+  PCPrintingOptionForSalesRequestModel printingOption;
+
   Map<String, dynamic> toJson() => {
         "customer": customer?.toJson(),
         "DGPNo": dgpNo,
@@ -79,12 +85,7 @@ class PCSalesRequestModel {
         "timeout": timeout,
         "totalAmount": (totalAmount * 100).round().toString(),
         "totalKDVAmount": (totalKdvAmount * 100).round().toString(),
-        "PrintingOption": {
-          "Belge": false,
-          "CustomerCopy": false,
-          "MerchantCopy": false,
-        },
-        "installmentCount": "0",
+        "PrintingOption": printingOption.toJson(),
       };
 }
 
@@ -242,5 +243,31 @@ class PCProductForSalesRequestModel {
         "productKDVAmount": (productKdvAmount * 100).round().toString(),
         "productKDVRate": productKdvRate.toString(),
         "productName": productName,
+      };
+}
+
+class PCPrintingOptionForSalesRequestModel {
+  PCPrintingOptionForSalesRequestModel({
+    required this.belge,
+    required this.customerCopy,
+    required this.merchantCopy,
+  });
+
+  /// Bilgi Fişi ya da e- belge’nin print edilip edilmeyceğini gösteren flag
+  /// true= Print edilsin false= Print edilmesin
+  final bool belge;
+
+  /// Banka slibin müşteri nüshası
+  /// true= Print edilsin false= Print edilmesin
+  final bool customerCopy;
+
+  /// Banka slibin işyeri nüshası
+  /// true= Print edilsin false= Print edilmesin
+  final bool merchantCopy;
+
+  Map<String, dynamic> toJson() => {
+        "Belge": belge,
+        "CustomerCopy": customerCopy,
+        "MerchantCopy": merchantCopy,
       };
 }
