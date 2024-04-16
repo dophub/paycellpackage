@@ -90,6 +90,7 @@ class PCSalesRequestModel {
         "totalAmount": (totalAmount * 100).round().toString(),
         "totalKDVAmount": (totalKdvAmount * 100).round().toString(),
         "PrintingOption": printingOption.toJson(),
+        "TxnId": "100282098",
       };
 }
 
