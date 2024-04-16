@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+import '../const/enum.dart';
+
 class PCSalesRequestModel {
   PCSalesRequestModel({
     this.customer,
@@ -36,7 +38,7 @@ class PCSalesRequestModel {
   /// -1 : SALES_CASH_VOID (Nakit Satış İptali) 2 : SALES_CARD (Kartlı Satış)
   /// -2 : SALES_CARD_VOID (Kartlı Satış İptali) 3 : REFUND (İade)
   /// -3 : REFUND_VOID (İadenin iptali)
-  String methodType;
+  PaycellMethodType methodType;
 
   String refNo;
 
@@ -77,7 +79,7 @@ class PCSalesRequestModel {
         "endTxnStatus": endTxnStatus,
         "header": header.toJson(),
         "invoiceStatus": invoiceStatus,
-        "methodType": methodType,
+        "methodType": methodType.type,
         "orderType": orderType,
         "PrintSlip": printSlip,
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
