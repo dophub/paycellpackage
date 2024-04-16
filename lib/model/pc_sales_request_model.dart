@@ -79,6 +79,12 @@ class PCSalesRequestModel {
         "timeout": timeout,
         "totalAmount": (totalAmount * 100).round().toString(),
         "totalKDVAmount": (totalKdvAmount * 100).round().toString(),
+        "PrintingOption": {
+          "Belge": false,
+          "CustomerCopy": false,
+          "MerchantCopy": false,
+        },
+        "installmentCount": "0",
       };
 }
 
