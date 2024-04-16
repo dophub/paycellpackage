@@ -92,14 +92,16 @@ class PaycellposPlugin {
 
   void completeSalesOperation(PCHeaderForCompleteSalesModel header, int transactionResult, String printSlip) {
     try {
-/*      final model = PCCompleteSalesRequestModel(
+      /// slip 2 requeste mi basılacak
+      if (printSlip != '0') return;
+      final model = PCCompleteSalesRequestModel(
         header: header,
         transactionResult: transactionResult,
         printSlip: printSlip,
       );
       final String json = jsonEncode(model.toJson());
       print('---->$json');
-      PaycellposPluginPlatform.instance.completeOperation(json).then((res) => print('<----$res'));*/
+      PaycellposPluginPlatform.instance.completeOperation(json).then((res) => print('<----$res'));
     } catch (_) {}
   }
 }

@@ -43,7 +43,9 @@ class PCSalesRequestModel {
   /// Kurum tarafından işleme özel verilen bir kategori var ise bu alana set edilecek.
   String orderType = '';
 
-  /// Slip basılıp basılmayacağı bilgisi bu alana set edilecek. “1”: slip basılacak , “2” :slip basılmayacak
+  /// Slip basılması için request 2 beklenip beklenmeyeceğini belirleyen parametredir.
+  /// 0 ise Slip basmak için request 2 yi bekle
+  /// 1 ise request 1 sonucunda slibi bas anlamı taşır.
   String printSlip;
 
   /// Product
