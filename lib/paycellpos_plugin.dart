@@ -97,7 +97,7 @@ class PaycellposPlugin {
       final model = PCCompleteSalesRequestModel(
         header: header,
         transactionResult: transactionResult,
-        printSlip: printSlip,
+        printSlip: '1',
       );
       final String json = jsonEncode(model.toJson());
       print('---->$json');
