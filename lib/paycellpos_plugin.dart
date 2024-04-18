@@ -40,6 +40,7 @@ class PaycellposPlugin {
     startSalesOperationReqMap ??= startSalesOperationReqModel!.toJson();
     final reqHeaderMap = startSalesOperationReqMap['header'];
     final String transactionId = reqHeaderMap['transactionId'];
+    startSalesOperationReqMap['PrintSlip'] = '1';
 /*    // final String application = reqHeaderMap['application'];
     // final String clientKey = reqHeaderMap['ClientKey'];
     // final String printSlip = startSalesOperationReqMap['PrintSlip'] ?? '1';
