@@ -25,6 +25,11 @@ class PCCompleteSalesRequestModel {
         'header': header.toJson(),
         'slipEstimatedTime': slipEstimatedTime,
         'transactionResult': transactionResult,
+        "PrintingOption": {
+          "Belge": true,
+          "CustomerCopy": false,
+          "MerchantCopy": false,
+        },
       };
 }
 
@@ -56,13 +61,5 @@ class PCHeaderForCompleteSalesModel {
         'transactionDate': transactionDate,
         'transactionId': transactionId,
         "checkSum": "",
-        "Hash": "",
-        "transactionStep": "1",
-        "slips": [],
-        "PrintingOption": {
-          "Belge": true,
-          "CustomerCopy": false,
-          "MerchantCopy": false,
-        },
       };
 }
