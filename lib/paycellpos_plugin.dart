@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -34,7 +35,7 @@ class PaycellposPlugin {
     VoidCallback? onPosBusy,
     VoidCallback? onPosNotInstalled,
     Function(String)? onError,
-    Function(PCSalesResponseModel, String)? onSuccess,
+    Future<void> Function(PCSalesResponseModel, String)? onSuccess,
     Function(String?)? onNotSuccess,
   }) async {
     assert(startSalesOperationReqModel != null || startSalesOperationReqMap != null);
@@ -79,8 +80,8 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
+        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(const Duration(seconds: 10));
         completeSalesOperation(header, 1, printSlip);
-        onSuccess?.call(mPosSalesResultAsModel, transactionId);
       } else {
         completeSalesOperation(header, 2, printSlip);
         onNotSuccess?.call(mPosSalesResultAsModel.operationResult!.resultCode);
@@ -98,7 +99,7 @@ class PaycellposPlugin {
       final model = PCCompleteSalesRequestModel(
         header: header,
         transactionResult: transactionResult,
-        printSlip: '2',
+        printSlip: '1',
       );
       final String json = jsonEncode(model.toJson());
       print('---->$json');

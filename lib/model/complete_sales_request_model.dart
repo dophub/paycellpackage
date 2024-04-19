@@ -25,11 +25,6 @@ class PCCompleteSalesRequestModel {
         'header': header.toJson(),
         'slipEstimatedTime': slipEstimatedTime,
         'transactionResult': transactionResult,
-        "PrintingOption": {
-          "Belge": true,
-          "CustomerCopy": false,
-          "MerchantCopy": false,
-        },
       };
 }
 
