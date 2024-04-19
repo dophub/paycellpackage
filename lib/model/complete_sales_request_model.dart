@@ -58,6 +58,11 @@ class PCHeaderForCompleteSalesModel {
         "checkSum": "",
         "Hash": "",
         "transactionStep": "1",
-        "slips": []
+        "slips": [],
+        "PrintingOption": {
+          "Belge": true,
+          "CustomerCopy": false,
+          "MerchantCopy": false,
+        },
       };
 }
