@@ -47,6 +47,7 @@ class PaycellposPlugin {
     final header = PCHeaderForCompleteSalesModel(
       application: application,
       clientKey: clientKey,
+      transactionId: transactionId,
     );
     try {
       if (!Platform.isAndroid) {

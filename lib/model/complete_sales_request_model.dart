@@ -37,6 +37,7 @@ class PCHeaderForCompleteSalesModel {
   PCHeaderForCompleteSalesModel({
     required this.clientKey,
     required this.application,
+    required this.transactionId,
   });
 
   /// Servis kullanımı için önceden paylaşılacak, servis güvenlik parametresi
@@ -52,7 +53,7 @@ class PCHeaderForCompleteSalesModel {
   String transactionDate = DateFormat('yyyymmddHHMMSS').format(DateTime.now());
 
   /// İşleme verilen uniq id (numara, guid formatında)
-  String transactionId = const Uuid().v4();
+  String transactionId;
 
   Map<String, dynamic> toJson() => {
         'application': application,
