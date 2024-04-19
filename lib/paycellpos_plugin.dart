@@ -80,7 +80,7 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
-        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(const Duration(seconds: 10));
+        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(const Duration(seconds: 10)).catchError((_, __) {});
         completeSalesOperation(header, 1, printSlip);
       } else {
         completeSalesOperation(header, 2, printSlip);
