@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:paycellpos_plugin/paycellpos_plugin_platform_interface.dart';
+import 'model/complete_sales_request_model.dart';
 import 'model/pc_sales_request_model.dart';
 import 'model/pc_sales_response_model.dart';
 
@@ -40,17 +41,16 @@ class PaycellposPlugin {
     startSalesOperationReqMap ??= startSalesOperationReqModel!.toJson();
     final reqHeaderMap = startSalesOperationReqMap['header'];
     final String transactionId = reqHeaderMap['transactionId'];
-    startSalesOperationReqMap['PrintSlip'] = '1';
-/*    // final String application = reqHeaderMap['application'];
-    // final String clientKey = reqHeaderMap['ClientKey'];
-    // final String printSlip = startSalesOperationReqMap['PrintSlip'] ?? '1';
+    final String application = reqHeaderMap['application'];
+    final String clientKey = reqHeaderMap['ClientKey'];
+    final String printSlip = startSalesOperationReqMap['PrintSlip'] ?? '1';
     final header = PCHeaderForCompleteSalesModel(
       application: application,
       clientKey: clientKey,
-    );*/
+    );
     try {
       if (!Platform.isAndroid) {
-        // completeSalesOperation(header, 2, printSlip);
+        completeSalesOperation(header, 2, printSlip);
         onPosNotInstalled?.call();
         return;
       }
@@ -62,13 +62,13 @@ class PaycellposPlugin {
       if (response == null) throw Exception();
 
       if (response == 'Mpos is busy.') {
-        //  completeSalesOperation(header, 2, printSlip);
+        completeSalesOperation(header, 2, printSlip);
         onPosBusy?.call();
         return;
       }
 
       if (response == 'Mpos isn\'t installed.') {
-        // completeSalesOperation(header, 2, printSlip);
+        completeSalesOperation(header, 2, printSlip);
         onPosNotInstalled?.call();
         return;
       }
@@ -78,19 +78,19 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
-        // completeSalesOperation(header, 1, printSlip);
+        completeSalesOperation(header, 1, printSlip);
         onSuccess?.call(mPosSalesResultAsModel, transactionId);
       } else {
-        // completeSalesOperation(header, 2, printSlip);
+        completeSalesOperation(header, 2, printSlip);
         onNotSuccess?.call(mPosSalesResultAsModel.operationResult!.resultCode);
       }
     } catch (e) {
-      // completeSalesOperation(header, 2, printSlip);
+      completeSalesOperation(header, 2, printSlip);
       onError?.call(e.toString());
     }
   }
 
-/*  void completeSalesOperation(PCHeaderForCompleteSalesModel header, int transactionResult, String printSlip) {
+  void completeSalesOperation(PCHeaderForCompleteSalesModel header, int transactionResult, String printSlip) {
     try {
       /// slip 2 requeste mi basılacak
       if (printSlip != '0') return;
@@ -103,5 +103,5 @@ class PaycellposPlugin {
       print('---->$json');
       PaycellposPluginPlatform.instance.completeOperation(json).then((res) => print('<----$res'));
     } catch (_) {}
-  }*/
+  }
 }
