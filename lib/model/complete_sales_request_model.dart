@@ -60,6 +60,5 @@ class PCHeaderForCompleteSalesModel {
         'requestId': requestId,
         'transactionDate': transactionDate,
         'transactionId': transactionId,
-        "checkSum": "",
       };
 }
