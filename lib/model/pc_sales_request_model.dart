@@ -25,7 +25,7 @@ class PCSalesRequestModel {
   String dgpNo;
 
   /// Timeout a göre yapılacak işlem durumu (0:başarısız,1:başarılı)
-  String endTxnStatus = '0';
+  String endTxnStatus = '1';
 
   /// Body'de gönderilecek header modeli
   PCHeaderForStartSalesModel header;
@@ -59,8 +59,10 @@ class PCSalesRequestModel {
   /// Turkcell işlemlerinde alt işlem tipi bilgisi
   String subMerchantId;
 
-  /// Timeout a göre yapılacak işlem durumu (0:başarısız,1:başarılı)
-  int timeout = 120;
+  /// Apptoapp yapılan uygulamaya gönderilen birinci ve ikinci
+  /// request arasındaki süre.
+  /// (tercihe bağlı olarak sn bazlı süre kullanılabilir)
+  int timeout = 5;
 
   ///  Toplam işlem tutarı. 100 ile çarpılarak gönderilecek
   double totalAmount;
