@@ -73,6 +73,7 @@ class PaycellposPlugin {
     final String application = reqHeaderMap['application'];
     final String clientKey = reqHeaderMap['ClientKey'];
     final String printSlip = startSalesOperationReqMap['PrintSlip'] ?? '1';
+    final int timeout = startSalesOperationReqMap['timeout'] ?? 5;
     final header = PCHeaderForCompleteSalesModel(
       application: application,
       clientKey: clientKey,
@@ -108,7 +109,8 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
-        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(const Duration(seconds: 2)).catchError((_, __) {});
+        final int duration = timeout - (timeout == 0 ? 0 : 1);
+        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(Duration(seconds: duration)).catchError((_, __) {});
         completeSalesOperation(header, 1, printSlip);
       } else {
         completeSalesOperation(header, 2, printSlip);
