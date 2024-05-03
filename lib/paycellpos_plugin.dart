@@ -41,9 +41,9 @@ enum PaycellPosStatusCodeEnum {
   offlineProvisionOpeningSuccess(3099), // Offline Provizyon Açma Başarılı 3099
   offlineRefundSuccess(3100), // Offline İade Başarılı 3100
   offlineUnpairedRefundSuccess(3101), // Offline Eşleniksiz İade Başarılı 3101
-  offlineTransactionCancellationNotificationBankSuccess(3102), // Offline İşlem İptalinin Başarılı Bildirimi (Banka) 3102
+  offlineTransactionCancellationNotificationBankSuccess(
+      3102), // Offline İşlem İptalinin Başarılı Bildirimi (Banka) 3102
   installmentSaleOfflineSuccess(3104); // Taksitli Satış Offline Başarılı 3104
-
 
   final int statusCode;
 
@@ -108,7 +108,7 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
-        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(const Duration(seconds: 10)).catchError((_, __) {});
+        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(const Duration(seconds: 2)).catchError((_, __) {});
         completeSalesOperation(header, 1, printSlip);
       } else {
         completeSalesOperation(header, 2, printSlip);

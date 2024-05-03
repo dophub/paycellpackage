@@ -88,28 +88,45 @@ class PCCardModel {
   PCCardModel({
     this.bankRefNo,
     this.paymentInterface,
+    this.acquirerId,
+    this.bin,
+    this.cardNumberMasked,
+    this.isOnus,
+    this.issuerId,
+    this.provisionNo,
+    this.rrn,
   });
 
   String? bankRefNo;
   String? paymentInterface;
-
-  PCCardModel copyWith({
-    String? bankRefNo,
-    String? paymentInterface,
-  }) =>
-      PCCardModel(
-        bankRefNo: bankRefNo ?? this.bankRefNo,
-        paymentInterface: paymentInterface ?? this.paymentInterface,
-      );
+  String? acquirerId;
+  String? bin;
+  String? cardNumberMasked;
+  String? isOnus;
+  String? issuerId;
+  String? provisionNo;
+  String? rrn;
 
   factory PCCardModel.fromJson(Map<String, dynamic> json) => PCCardModel(
         bankRefNo: json["bankRefNo"],
         paymentInterface: json["PaymentInterface"],
+        acquirerId: json["AcquirerId"],
+        bin: json["Bin"],
+        cardNumberMasked: json["CardNumberMasked"],
+        isOnus: json["isOnus"],
+        issuerId: json["IssuerId"],
+        provisionNo: json["ProvisionNo"],
       );
 
   Map<String, dynamic> toJson() => {
         "bankRefNo": bankRefNo,
         "PaymentInterface": paymentInterface,
+        "AcquirerId": acquirerId,
+        "Bin": bin,
+        "CardNumberMasked": cardNumberMasked,
+        "isOnus": isOnus,
+        "IssuerId": issuerId,
+        "ProvisionNo": provisionNo,
       };
 }
 
