@@ -122,12 +122,19 @@ class PaycellposPlugin {
       } else {
         completeSalesOperation(header, 2, printSlip);
         final resultCode = mPosSalesResultAsModel.operationResult!.resultCode;
-        onNotSuccess?.call(resultCode, MyLocalization.translate(resultCode ?? 'hata_olustu', langCode));
+        final msg = getErrorMessage(mPosSalesResultAsModel.operationResult!);
+        onNotSuccess?.call(resultCode, msg);
       }
     } catch (e) {
       completeSalesOperation(header, 2, printSlip);
       onError?.call(e.toString());
     }
+  }
+
+  String getErrorMessage(PCOperationResultModel? operationResult) {
+    return (operationResult!.resultDesc ?? '') +
+        '\n' +
+        MyLocalization.translate((operationResult.resultCode ?? 'hata_olustu'), 'tr');
   }
 
   void completeSalesOperation(PCHeaderForCompleteSalesModel header, int transactionResult, String printSlip) {
