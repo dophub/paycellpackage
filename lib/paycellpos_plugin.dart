@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:paycellpos_plugin/localization/my_localization.dart';
 import 'package:paycellpos_plugin/paycellpos_plugin_platform_interface.dart';
 import 'model/complete_sales_request_model.dart';
 import 'model/pc_sales_request_model.dart';
@@ -64,7 +65,8 @@ class PaycellposPlugin {
     VoidCallback? onPosNotInstalled,
     Function(String)? onError,
     Future<void> Function(PCSalesResponseModel, String)? onSuccess,
-    Function(String?)? onNotSuccess,
+    Function(String? resultCode, String? message)? onNotSuccess,
+    String langCode = 'tr',
   }) async {
     assert(startSalesOperationReqModel != null || startSalesOperationReqMap != null);
     startSalesOperationReqMap ??= startSalesOperationReqModel!.toJson();
@@ -109,12 +111,18 @@ class PaycellposPlugin {
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );
       if (result) {
+        /// paycell pos e giden timeout ten küçük olması gerek çünkü timeout olmadan
+        /// ikinci request gitmesi gerek yoksa paycell pos iptal e düşer
         final int duration = timeout - (timeout == 0 ? 0 : 1);
-        await onSuccess?.call(mPosSalesResultAsModel, transactionId).timeout(Duration(seconds: duration)).catchError((_, __) {});
+        await onSuccess
+            ?.call(mPosSalesResultAsModel, transactionId)
+            .timeout(Duration(seconds: duration))
+            .catchError((_, __) {});
         completeSalesOperation(header, 1, printSlip);
       } else {
         completeSalesOperation(header, 2, printSlip);
-        onNotSuccess?.call(mPosSalesResultAsModel.operationResult!.resultCode);
+        final resultCode = mPosSalesResultAsModel.operationResult!.resultCode;
+        onNotSuccess?.call(resultCode, MyLocalization.translate(resultCode ?? 'hata_olustu', langCode));
       }
     } catch (e) {
       completeSalesOperation(header, 2, printSlip);
