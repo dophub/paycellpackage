@@ -132,7 +132,11 @@ class PaycellposPlugin {
   }
 
   String _getErrorMessage(PCOperationResultModel? operationResult, String langCode) {
-    return '${operationResult!.resultDesc ?? ''}\n${MyLocalization.translate((operationResult.resultCode ?? 'hata_olustu'), langCode)}';
+    try {
+      return '${operationResult?.resultDesc ?? ''}\n${MyLocalization.translate((operationResult?.resultCode ?? 'hata_olustu'), langCode)}';
+    } catch (_) {
+      return MyLocalization.translate('hata_olustu', langCode);
+    }
   }
 
   void completeSalesOperation(PCHeaderForCompleteSalesModel header, int transactionResult, String printSlip) {
