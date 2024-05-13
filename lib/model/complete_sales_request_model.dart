@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 
 class PCCompleteSalesRequestModel {
   PCCompleteSalesRequestModel({
