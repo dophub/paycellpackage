@@ -1,8 +1,9 @@
+import 'package:background_json_parser/background_json_parser.dart';
 import 'package:intl/intl.dart';
 
 import '../const/enum.dart';
 
-class PCSalesRequestModel {
+class PCSalesRequestModel extends IBaseModel<PCSalesRequestModel> {
   PCSalesRequestModel({
     this.customer,
     required this.header,
@@ -75,6 +76,7 @@ class PCSalesRequestModel {
   /// BKM dijital slip geliştirmesi kapsamında banka slipleri iletilmezse 2.Parametre dikkate alınmayacaktır.
   PCPrintingOptionForSalesRequestModel printingOption;
 
+  @override
   Map<String, dynamic> toJson() => {
         "customer": customer?.toJson(),
         "DGPNo": dgpNo,
@@ -93,6 +95,11 @@ class PCSalesRequestModel {
         "totalKDVAmount": (totalKdvAmount * 100).round().toString(),
         "PrintingOption": printingOption.toJson(),
       };
+
+  @override
+  PCSalesRequestModel fromJson(Map<String, dynamic> json) {
+    throw UnimplementedError();
+  }
 }
 
 class PCCustomerForStartSalesRequestModel {
