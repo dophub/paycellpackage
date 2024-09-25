@@ -106,7 +106,7 @@ class PaycellposPlugin {
         return;
       }
 
-      final mPosSalesResultAsModel = PCSalesResponseModel.fromJson(jsonDecode(response));
+      final mPosSalesResultAsModel = PCSalesResponseModel().fromJson(jsonDecode(response));
       final result = PaycellPosStatusCodeEnum.values.any(
         (element) => element.statusCode.toString() == mPosSalesResultAsModel.operationResult!.resultCode,
       );

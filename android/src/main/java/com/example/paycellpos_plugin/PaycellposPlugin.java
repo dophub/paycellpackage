@@ -65,6 +65,11 @@ public class PaycellposPlugin implements FlutterPlugin, MethodCallHandler, Activ
     }
 
     @Override
+    public void onDetachedFromEngine(FlutterPluginBinding binding) {
+        channel.setMethodCallHandler(null);
+    }
+
+    @Override
     public void onMethodCall(MethodCall call, Result result) {
         String arguments = call.arguments();
         switch (call.method) {
@@ -87,10 +92,6 @@ public class PaycellposPlugin implements FlutterPlugin, MethodCallHandler, Activ
         }
     }
 
-    @Override
-    public void onDetachedFromEngine(FlutterPluginBinding binding) {
-        channel.setMethodCallHandler(null);
-    }
 
     private void launchPaycellPos(String requestBody, int reqCode) {
         log("---> PaycellPlugin", "requestCode =" + reqCode + ",requestBody =" + requestBody);
@@ -135,7 +136,8 @@ public class PaycellposPlugin implements FlutterPlugin, MethodCallHandler, Activ
     void log(String tag, String msg) {
         try {
             Log.i(tag, msg);
-        } finally {}
+        } finally {
+        }
     }
 }
 

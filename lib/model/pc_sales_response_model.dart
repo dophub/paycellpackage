@@ -1,4 +1,6 @@
-class PCSalesResponseModel {
+import 'package:background_json_parser/background_json_parser.dart';
+
+class PCSalesResponseModel extends IBaseModel<PCSalesResponseModel> {
   PCSalesResponseModel({
     this.mposUniqueId,
     this.card,
@@ -52,7 +54,8 @@ class PCSalesResponseModel {
         txnId: txnId ?? this.txnId,
       );
 
-  factory PCSalesResponseModel.fromJson(Map<String, dynamic> json) => PCSalesResponseModel(
+  @override
+  fromJson(Map<String, dynamic> json) => PCSalesResponseModel(
         mposUniqueId: json["MPOSUniqueId"],
         card: json["card"] == null ? null : PCCardModel.fromJson(json["card"]),
         invoice: json["invoice"] == null ? null : PCInvoiceModel.fromJson(json["invoice"]),
@@ -69,6 +72,7 @@ class PCSalesResponseModel {
         txnId: json["TxnId"],
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         "MPOSUniqueId": mposUniqueId,
         "card": card?.toJson(),
