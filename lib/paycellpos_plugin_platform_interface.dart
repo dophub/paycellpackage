@@ -30,4 +30,8 @@ abstract class PaycellposPluginPlatform extends PlatformInterface {
   Future<String?> completeOperation(String data) {
     throw UnimplementedError('completeOperation() has not been implemented.');
   }
+
+  Future<String?> getPaymentDetail(String data) {
+    throw UnimplementedError('getPaymentDetail() has not been implemented.');
+  }
 }

@@ -18,4 +18,9 @@ class MethodChannelPaycellposPlugin extends PaycellposPluginPlatform {
   Future<String?> completeOperation(String data) async {
     return await methodChannel.invokeMethod<String>('completeOperation', data);
   }
+
+  @override
+  Future<String?> getPaymentDetail(String data) async {
+    return await methodChannel.invokeMethod<String>('getPaymentDetail', data);
+  }
 }

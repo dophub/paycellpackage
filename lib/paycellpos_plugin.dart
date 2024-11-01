@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:paycellpos_plugin/localization/my_localization.dart';
+import 'package:paycellpos_plugin/model/pc_get_payment_detail_request_model.dart';
+import 'package:paycellpos_plugin/model/pc_get_payment_detail_response_model.dart';
 import 'package:paycellpos_plugin/paycellpos_plugin_platform_interface.dart';
 import 'model/complete_sales_request_model.dart';
 import 'model/pc_sales_request_model.dart';
@@ -152,5 +154,50 @@ class PaycellposPlugin {
       print('---->$json');
       PaycellposPluginPlatform.instance.completeOperation(json).then((res) => print('<----$res'));
     } catch (_) {}
+  }
+
+  Future<void> getPaymentDetail({
+    required PCGetPaymentDetailRequestModel getPaymentDetailRequestModel,
+    void Function(PcGetPaymentDetailResponseModel reponse)? onSuccess,
+    Function(PcGetPaymentDetailResponseModel reponse)? onNotSuccess,
+    VoidCallback? onPosBusy,
+    VoidCallback? onPosNotInstalled,
+    String langCode = 'tr',
+    Function(String)? onError,
+  }) async {
+    try {
+      if (!Platform.isAndroid) {
+        onPosNotInstalled?.call();
+        return;
+      }
+
+      final reqJson = getPaymentDetailRequestModel.convertToJson();
+
+      print('---->$reqJson');
+      final response = await PaycellposPluginPlatform.instance.getPaymentDetail(reqJson);
+      print('<----$response');
+
+      if (response == 'Mpos is busy.') {
+        onPosBusy?.call();
+        return;
+      }
+
+      if (response == 'Mpos isn\'t installed.') {
+        onPosNotInstalled?.call();
+        return;
+      }
+
+      if (response == null) throw Exception();
+
+      final PcGetPaymentDetailResponseModel result = PcGetPaymentDetailResponseModel().jsonParser(response);
+
+      if (result.transactionStatus?.errorCode == '200') {
+        onSuccess?.call(result);
+      } else {
+        onNotSuccess?.call(result);
+      }
+    } catch (e) {
+      onError?.call(e.toString());
+    }
   }
 }

@@ -13,10 +13,10 @@ packages:
     dependency: "direct main"
     description:
       name: background_json_parser
-      sha256: "63c01fd7aed3acacd74f571311d6b0e665532ce72241b822e79e6d345f548974"
+      sha256: "20e2660fb18d0f114317da717803affeb603d19658b06992b44eb404a7a80e16"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   boolean_selector:
     dependency: transitive
     description:
@@ -225,5 +225,5 @@ packages:
     source: hosted
     version: "14.2.1"
 sdks:
-  dart: ">=3.3.0 <4.0.0"
+  dart: ">=3.4.1 <4.0.0"
   flutter: ">=3.18.0-18.0.pre.54"

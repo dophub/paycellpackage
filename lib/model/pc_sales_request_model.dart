@@ -177,6 +177,7 @@ class PCCustomerForStartSalesRequestModel {
 class PCHeaderForStartSalesModel {
   PCHeaderForStartSalesModel({
     required this.transactionId,
+    required this.requestId,
     required this.clientKey,
     required this.application,
     required this.packageName,
@@ -196,7 +197,7 @@ class PCHeaderForStartSalesModel {
   String hash = "";
 
   /// Satış başlatma isteğinin request ID'si
-  String requestId = '1';
+  String requestId;
 
   /// Terminal Id gönderilebilir
   String sequentialNo;

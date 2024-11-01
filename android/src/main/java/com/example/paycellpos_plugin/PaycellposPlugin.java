@@ -89,6 +89,10 @@ public class PaycellposPlugin implements FlutterPlugin, MethodCallHandler, Activ
                 map.put(6, result);
                 launchPaycellPos(arguments, 6);
                 break;
+            case "getPaymentDetail":
+                map.put(1, result);
+                launchPaycellPos(arguments, 1);
+                break;
         }
     }
 
