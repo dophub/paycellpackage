@@ -16,6 +16,8 @@ class PCCompleteSalesRequestModel {
   /// Milisaniye cinsinden slipler arası bekleme süresinin ne kadar olacağı belirlenecek.
   int slipEstimatedTime = 1000;
 
+  int bankSlipEstimatedTime = 6000;
+
   /// İşlem sonlandırmak istenden durumudur. “1”: İşlem başarılı “2”: İşlem başarısız
   int transactionResult;
 
@@ -24,6 +26,7 @@ class PCCompleteSalesRequestModel {
         'header': header.toJson(),
         'slipEstimatedTime': slipEstimatedTime,
         'transactionResult': transactionResult,
+        'bankSlipEstimatedTime': bankSlipEstimatedTime,
       };
 }
 
@@ -32,16 +35,22 @@ class PCHeaderForCompleteSalesModel {
     required this.clientKey,
     required this.application,
     required this.transactionId,
+    required this.packageName,
   });
 
   /// Servis kullanımı için önceden paylaşılacak, servis güvenlik parametresi
   String application;
+
+  /// productionda "com.procenne.mpos" developmentda "com.procenne.mpos.turkcellmenu.test2"
+  String packageName;
 
   /// "PaycellMPOS" olarak verilecek.
   String clientKey;
 
   /// Satış tamamlama isteğinin request ID'si
   String requestId = '2';
+
+  String transactionStep = '1';
 
   /// İşlem tarihi aşağıda verilen formatta
   String transactionDate = DateFormat('yyyymmddHHMMSS').format(DateTime.now());
@@ -51,9 +60,11 @@ class PCHeaderForCompleteSalesModel {
 
   Map<String, dynamic> toJson() => {
         'application': application,
+        'packageName': packageName,
         'ClientKey': clientKey,
         'requestId': requestId,
         'transactionDate': transactionDate,
         'transactionId': transactionId,
+        'transactionStep': transactionStep,
       };
 }

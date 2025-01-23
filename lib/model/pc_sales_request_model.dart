@@ -76,6 +76,11 @@ class PCSalesRequestModel extends IBaseModel<PCSalesRequestModel> {
   /// BKM dijital slip geliştirmesi kapsamında banka slipleri iletilmezse 2.Parametre dikkate alınmayacaktır.
   PCPrintingOptionForSalesRequestModel printingOption;
 
+  int bankSlipEstimatedTime = 6000;
+
+  /// Takist sayısı
+  String installmentCount = "0";
+
   @override
   Map<String, dynamic> toJson() => {
         "customer": customer?.toJson(),
@@ -94,6 +99,8 @@ class PCSalesRequestModel extends IBaseModel<PCSalesRequestModel> {
         "totalAmount": (totalAmount * 100).round().toString(),
         "totalKDVAmount": (totalKdvAmount * 100).round().toString(),
         "PrintingOption": printingOption.toJson(),
+        "installmentCount": installmentCount,
+        "bankSlipEstimatedTime": bankSlipEstimatedTime,
       };
 
   @override

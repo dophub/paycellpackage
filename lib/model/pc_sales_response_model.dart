@@ -1,193 +1,314 @@
 import 'package:background_json_parser/background_json_parser.dart';
 
 class PCSalesResponseModel extends IBaseModel<PCSalesResponseModel> {
+  PCHeaderModel? header;
+  PCOperationResultModel? operationResult;
+  PCTransactionDetailsModel? transactionDetails;
+
   PCSalesResponseModel({
-    this.mposUniqueId,
-    this.card,
-    this.invoice,
-    this.urunListesi,
     this.header,
-    this.oeName,
     this.operationResult,
-    this.orderDate,
-    this.orderNumber,
-    this.transactionType,
-    this.txnId,
+    this.transactionDetails,
   });
 
-  String? mposUniqueId;
-  PCCardModel? card;
-  PCInvoiceModel? invoice;
-  List<PCProductListModel>? urunListesi;
-  PCHeaderModel? header;
-  String? oeName;
-  PCOperationResultModel? operationResult;
-  DateTime? orderDate;
-  String? orderNumber;
-  String? transactionType;
-  String? txnId;
-
   PCSalesResponseModel copyWith({
-    String? mposUniqueId,
-    PCCardModel? card,
-    PCInvoiceModel? invoice,
-    List<PCProductListModel>? urunListesi,
     PCHeaderModel? header,
-    String? oeName,
     PCOperationResultModel? operationResult,
-    DateTime? orderDate,
-    String? orderNumber,
-    String? transactionType,
-    String? txnId,
+    PCTransactionDetailsModel? transactionDetails,
   }) =>
       PCSalesResponseModel(
-        mposUniqueId: mposUniqueId ?? this.mposUniqueId,
-        card: card ?? this.card,
-        invoice: invoice ?? this.invoice,
-        urunListesi: urunListesi ?? this.urunListesi,
         header: header ?? this.header,
-        oeName: oeName ?? this.oeName,
         operationResult: operationResult ?? this.operationResult,
-        orderDate: orderDate ?? this.orderDate,
-        orderNumber: orderNumber ?? this.orderNumber,
-        transactionType: transactionType ?? this.transactionType,
-        txnId: txnId ?? this.txnId,
+        transactionDetails: transactionDetails ?? this.transactionDetails,
       );
 
   @override
   fromJson(Map<String, dynamic> json) => PCSalesResponseModel(
-        mposUniqueId: json["MPOSUniqueId"],
-        card: json["card"] == null ? null : PCCardModel.fromJson(json["card"]),
-        invoice: json["invoice"] == null ? null : PCInvoiceModel.fromJson(json["invoice"]),
-        urunListesi: json["urunListesi"] == null
-            ? []
-            : List<PCProductListModel>.from(json["urunListesi"]!.map((x) => PCProductListModel.fromJson(x))),
         header: json["header"] == null ? null : PCHeaderModel.fromJson(json["header"]),
-        oeName: json["OEName"],
         operationResult:
             json["operationResult"] == null ? null : PCOperationResultModel.fromJson(json["operationResult"]),
-        orderDate: json["OrderDate"] == null ? null : DateTime.parse(json["OrderDate"]),
-        orderNumber: json["OrderNumber"],
-        transactionType: json["transactionType"],
-        txnId: json["TxnId"],
+        transactionDetails:
+            json["transactionDetails"] == null ? null : PCTransactionDetailsModel.fromJson(json["transactionDetails"]),
       );
 
   @override
   Map<String, dynamic> toJson() => {
-        "MPOSUniqueId": mposUniqueId,
-        "card": card?.toJson(),
-        "invoice": invoice?.toJson(),
-        "urunListesi": urunListesi == null ? [] : List<dynamic>.from(urunListesi!.map((x) => x.toJson())),
         "header": header?.toJson(),
-        "OEName": oeName,
         "operationResult": operationResult?.toJson(),
-        "OrderDate": orderDate?.toIso8601String(),
-        "OrderNumber": orderNumber,
-        "transactionType": transactionType,
-        "TxnId": txnId,
-      };
-}
-
-class PCCardModel {
-  PCCardModel({
-    this.bankRefNo,
-    this.paymentInterface,
-    this.acquirerId,
-    this.bin,
-    this.cardNumberMasked,
-    this.isOnus,
-    this.issuerId,
-    this.provisionNo,
-    this.rrn,
-  });
-
-  String? bankRefNo;
-  String? paymentInterface;
-  String? acquirerId;
-  String? bin;
-  String? cardNumberMasked;
-  String? isOnus;
-  String? issuerId;
-  String? provisionNo;
-  String? rrn;
-
-  factory PCCardModel.fromJson(Map<String, dynamic> json) => PCCardModel(
-        bankRefNo: json["bankRefNo"],
-        paymentInterface: json["PaymentInterface"],
-        acquirerId: json["AcquirerId"],
-        bin: json["Bin"],
-        cardNumberMasked: json["CardNumberMasked"],
-        isOnus: json["isOnus"],
-        issuerId: json["IssuerId"],
-        provisionNo: json["ProvisionNo"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "bankRefNo": bankRefNo,
-        "PaymentInterface": paymentInterface,
-        "AcquirerId": acquirerId,
-        "Bin": bin,
-        "CardNumberMasked": cardNumberMasked,
-        "isOnus": isOnus,
-        "IssuerId": issuerId,
-        "ProvisionNo": provisionNo,
+        "transactionDetails": transactionDetails?.toJson(),
       };
 }
 
 class PCHeaderModel {
+  String? mposUniqueId;
+  String? application;
+  String? mainPaymentUniqueId;
+  String? packageName;
+  String? requestId;
+  String? transactionDate;
+  String? transactionId;
+
   PCHeaderModel({
+    this.mposUniqueId,
     this.application,
-    this.clientKey,
-    this.hash,
+    this.mainPaymentUniqueId,
+    this.packageName,
     this.requestId,
     this.transactionDate,
     this.transactionId,
   });
 
-  String? application;
-  String? clientKey;
-  String? hash;
-  String? requestId;
-  String? transactionDate;
-  String? transactionId;
-
   PCHeaderModel copyWith({
+    String? mposUniqueId,
     String? application,
-    String? clientKey,
-    String? hash,
+    String? mainPaymentUniqueId,
+    String? packageName,
     String? requestId,
     String? transactionDate,
     String? transactionId,
   }) =>
       PCHeaderModel(
+        mposUniqueId: mposUniqueId ?? this.mposUniqueId,
         application: application ?? this.application,
-        clientKey: clientKey ?? this.clientKey,
-        hash: hash ?? this.hash,
+        mainPaymentUniqueId: mainPaymentUniqueId ?? this.mainPaymentUniqueId,
+        packageName: packageName ?? this.packageName,
         requestId: requestId ?? this.requestId,
         transactionDate: transactionDate ?? this.transactionDate,
         transactionId: transactionId ?? this.transactionId,
       );
 
   factory PCHeaderModel.fromJson(Map<String, dynamic> json) => PCHeaderModel(
+        mposUniqueId: json["MPOSUniqueId"],
         application: json["application"],
-        clientKey: json["ClientKey"],
-        hash: json["Hash"],
+        mainPaymentUniqueId: json["mainPaymentUniqueId"],
+        packageName: json["packageName"],
         requestId: json["requestId"],
         transactionDate: json["transactionDate"],
         transactionId: json["transactionId"],
       );
 
   Map<String, dynamic> toJson() => {
+        "MPOSUniqueId": mposUniqueId,
         "application": application,
-        "ClientKey": clientKey,
-        "Hash": hash,
+        "mainPaymentUniqueId": mainPaymentUniqueId,
+        "packageName": packageName,
         "requestId": requestId,
         "transactionDate": transactionDate,
         "transactionId": transactionId,
       };
 }
 
+class PCOperationResultModel {
+  String? resultCode;
+  String? resultDesc;
+
+  PCOperationResultModel({
+    this.resultCode,
+    this.resultDesc,
+  });
+
+  PCOperationResultModel copyWith({
+    String? resultCode,
+    String? resultDesc,
+  }) =>
+      PCOperationResultModel(
+        resultCode: resultCode ?? this.resultCode,
+        resultDesc: resultDesc ?? this.resultDesc,
+      );
+
+  factory PCOperationResultModel.fromJson(Map<String, dynamic> json) => PCOperationResultModel(
+        resultCode: json["resultCode"],
+        resultDesc: json["resultDesc"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "resultCode": resultCode,
+        "resultDesc": resultDesc,
+      };
+}
+
+class PCTransactionDetailsModel {
+  PCCardModel? card;
+  PCInvoiceModel? invoice;
+  List<PCProductListModel>? urunListesi;
+  List<String>? invoiceSlip;
+  bool? isDigitalSlip;
+  String? oeName;
+  DateTime? orderDate;
+  String? orderNumber;
+  int? paymentTypeId;
+  String? transactionType;
+  String? txnId;
+  int? txnStep;
+
+  PCTransactionDetailsModel({
+    this.card,
+    this.invoice,
+    this.urunListesi,
+    this.invoiceSlip,
+    this.isDigitalSlip,
+    this.oeName,
+    this.orderDate,
+    this.orderNumber,
+    this.paymentTypeId,
+    this.transactionType,
+    this.txnId,
+    this.txnStep,
+  });
+
+  PCTransactionDetailsModel copyWith({
+    PCCardModel? card,
+    PCInvoiceModel? invoice,
+    List<PCProductListModel>? urunListesi,
+    List<String>? invoiceSlip,
+    bool? isDigitalSlip,
+    String? oeName,
+    DateTime? orderDate,
+    String? orderNumber,
+    int? paymentTypeId,
+    String? transactionType,
+    String? txnId,
+    int? txnStep,
+  }) =>
+      PCTransactionDetailsModel(
+        card: card ?? this.card,
+        invoice: invoice ?? this.invoice,
+        urunListesi: urunListesi ?? this.urunListesi,
+        invoiceSlip: invoiceSlip ?? this.invoiceSlip,
+        isDigitalSlip: isDigitalSlip ?? this.isDigitalSlip,
+        oeName: oeName ?? this.oeName,
+        orderDate: orderDate ?? this.orderDate,
+        orderNumber: orderNumber ?? this.orderNumber,
+        paymentTypeId: paymentTypeId ?? this.paymentTypeId,
+        transactionType: transactionType ?? this.transactionType,
+        txnId: txnId ?? this.txnId,
+        txnStep: txnStep ?? this.txnStep,
+      );
+
+  factory PCTransactionDetailsModel.fromJson(Map<String, dynamic> json) => PCTransactionDetailsModel(
+        card: json["card"] == null ? null : PCCardModel.fromJson(json["card"]),
+        invoice: json["invoice"] == null ? null : PCInvoiceModel.fromJson(json["invoice"]),
+        urunListesi: json["urunListesi"] == null
+            ? []
+            : List<PCProductListModel>.from(json["urunListesi"]!.map((x) => PCProductListModel.fromJson(x))),
+        invoiceSlip: json["invoiceSlip"] == null ? [] : List<String>.from(json["invoiceSlip"]!.map((x) => x)),
+        isDigitalSlip: json["isDigitalSlip"],
+        oeName: json["OEName"],
+        orderDate: json["OrderDate"] == null ? null : DateTime.parse(json["OrderDate"]),
+        orderNumber: json["OrderNumber"],
+        paymentTypeId: json["PaymentTypeId"],
+        transactionType: json["transactionType"],
+        txnId: json["TxnId"],
+        txnStep: json["TxnStep"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "card": card?.toJson(),
+        "invoice": invoice?.toJson(),
+        "urunListesi": urunListesi == null ? [] : List<dynamic>.from(urunListesi!.map((x) => x.toJson())),
+        "invoiceSlip": invoiceSlip == null ? [] : List<dynamic>.from(invoiceSlip!.map((x) => x)),
+        "isDigitalSlip": isDigitalSlip,
+        "OEName": oeName,
+        "OrderDate": orderDate?.toIso8601String(),
+        "OrderNumber": orderNumber,
+        "PaymentTypeId": paymentTypeId,
+        "transactionType": transactionType,
+        "TxnId": txnId,
+        "TxnStep": txnStep,
+      };
+}
+
+class PCCardModel {
+  String? acquirerId;
+  String? bankRefNo;
+  String? bin;
+  String? cardNumberMasked;
+  String? isOnus;
+  String? issuerId;
+  String? paymentInterface;
+  String? provisionNo;
+  String? rrn;
+
+  PCCardModel({
+    this.acquirerId,
+    this.bankRefNo,
+    this.bin,
+    this.cardNumberMasked,
+    this.isOnus,
+    this.issuerId,
+    this.paymentInterface,
+    this.provisionNo,
+    this.rrn,
+  });
+
+  PCCardModel copyWith({
+    String? acquirerId,
+    String? bankRefNo,
+    String? bin,
+    String? cardNumberMasked,
+    String? isOnus,
+    String? issuerId,
+    String? paymentInterface,
+    String? provisionNo,
+    String? rrn,
+  }) =>
+      PCCardModel(
+        acquirerId: acquirerId ?? this.acquirerId,
+        bankRefNo: bankRefNo ?? this.bankRefNo,
+        bin: bin ?? this.bin,
+        cardNumberMasked: cardNumberMasked ?? this.cardNumberMasked,
+        isOnus: isOnus ?? this.isOnus,
+        issuerId: issuerId ?? this.issuerId,
+        paymentInterface: paymentInterface ?? this.paymentInterface,
+        provisionNo: provisionNo ?? this.provisionNo,
+        rrn: rrn ?? this.rrn,
+      );
+
+  factory PCCardModel.fromJson(Map<String, dynamic> json) => PCCardModel(
+        acquirerId: json["AcquirerId"],
+        bankRefNo: json["bankRefNo"],
+        bin: json["Bin"],
+        cardNumberMasked: json["CardNumberMasked"],
+        isOnus: json["isOnus"],
+        issuerId: json["IssuerId"],
+        paymentInterface: json["PaymentInterface"],
+        provisionNo: json["ProvisionNo"],
+        rrn: json["RRN"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "AcquirerId": acquirerId,
+        "bankRefNo": bankRefNo,
+        "Bin": bin,
+        "CardNumberMasked": cardNumberMasked,
+        "isOnus": isOnus,
+        "IssuerId": issuerId,
+        "PaymentInterface": paymentInterface,
+        "ProvisionNo": provisionNo,
+        "RRN": rrn,
+      };
+}
+
 class PCInvoiceModel {
+  PCInvoiceMerchantModel? invoiceMerchant;
+  String? batchId;
+  String? invoiceAmount;
+  String? invoiceCurrency;
+  String? invoiceCustomerAddress;
+  String? invoiceCustomerEmail;
+  String? invoiceCustomerName;
+  String? invoiceCustomerSurName;
+  String? invoiceCustomerTckn;
+  String? invoiceCustomerTelefon;
+  String? invoiceCustomerTitle;
+  DateTime? invoiceDate;
+  String? invoiceEttn;
+  DateTime? invoiceInvoiceDate;
+  String? invoiceNo;
+  String? invoiceNumber;
+  String? invoiceRef;
+  String? invoiceType;
+
   PCInvoiceModel({
     this.invoiceMerchant,
     this.batchId,
@@ -208,25 +329,6 @@ class PCInvoiceModel {
     this.invoiceRef,
     this.invoiceType,
   });
-
-  PCInvoiceMerchantModel? invoiceMerchant;
-  String? batchId;
-  String? invoiceAmount;
-  String? invoiceCurrency;
-  String? invoiceCustomerAddress;
-  String? invoiceCustomerEmail;
-  String? invoiceCustomerName;
-  String? invoiceCustomerSurName;
-  String? invoiceCustomerTckn;
-  String? invoiceCustomerTelefon;
-  String? invoiceCustomerTitle;
-  DateTime? invoiceDate;
-  String? invoiceEttn;
-  DateTime? invoiceInvoiceDate;
-  String? invoiceNo;
-  String? invoiceNumber;
-  String? invoiceRef;
-  String? invoiceType;
 
   PCInvoiceModel copyWith({
     PCInvoiceMerchantModel? invoiceMerchant,
@@ -270,8 +372,7 @@ class PCInvoiceModel {
       );
 
   factory PCInvoiceModel.fromJson(Map<String, dynamic> json) => PCInvoiceModel(
-        invoiceMerchant:
-            json["invoiceMerchant"] == null ? null : PCInvoiceMerchantModel.fromJson(json["invoiceMerchant"]),
+        invoiceMerchant: json["invoiceMerchant"] == null ? null : PCInvoiceMerchantModel.fromJson(json["invoiceMerchant"]),
         batchId: json["BatchId"],
         invoiceAmount: json["invoiceAmount"],
         invoiceCurrency: json["invoiceCurrency"],
@@ -314,6 +415,20 @@ class PCInvoiceModel {
 }
 
 class PCInvoiceMerchantModel {
+  int? exclusiveIntegratorDefinitionId;
+  String? invoiceMerchantAddress;
+  String? invoiceMerchantCity;
+  String? invoiceMerchantDistrict;
+  String? invoiceMerchantEmail;
+  String? invoiceMerchantGsm;
+  int? invoiceMerchantId;
+  String? invoiceMerchantMersisNo;
+  String? invoiceMerchantName;
+  String? invoiceMerchantTaxNo;
+  String? invoiceMerchantTaxOffice;
+  String? invoiceMerchantTelephone;
+  String? invoiceMerchantTitle;
+
   PCInvoiceMerchantModel({
     this.exclusiveIntegratorDefinitionId,
     this.invoiceMerchantAddress,
@@ -324,27 +439,11 @@ class PCInvoiceMerchantModel {
     this.invoiceMerchantId,
     this.invoiceMerchantMersisNo,
     this.invoiceMerchantName,
-    this.invoiceMerchantSicilNo,
     this.invoiceMerchantTaxNo,
     this.invoiceMerchantTaxOffice,
     this.invoiceMerchantTelephone,
     this.invoiceMerchantTitle,
   });
-
-  int? exclusiveIntegratorDefinitionId;
-  String? invoiceMerchantAddress;
-  String? invoiceMerchantCity;
-  String? invoiceMerchantDistrict;
-  String? invoiceMerchantEmail;
-  String? invoiceMerchantGsm;
-  int? invoiceMerchantId;
-  String? invoiceMerchantMersisNo;
-  String? invoiceMerchantName;
-  String? invoiceMerchantSicilNo;
-  String? invoiceMerchantTaxNo;
-  String? invoiceMerchantTaxOffice;
-  String? invoiceMerchantTelephone;
-  String? invoiceMerchantTitle;
 
   PCInvoiceMerchantModel copyWith({
     int? exclusiveIntegratorDefinitionId,
@@ -356,7 +455,6 @@ class PCInvoiceMerchantModel {
     int? invoiceMerchantId,
     String? invoiceMerchantMersisNo,
     String? invoiceMerchantName,
-    String? invoiceMerchantSicilNo,
     String? invoiceMerchantTaxNo,
     String? invoiceMerchantTaxOffice,
     String? invoiceMerchantTelephone,
@@ -372,7 +470,6 @@ class PCInvoiceMerchantModel {
         invoiceMerchantId: invoiceMerchantId ?? this.invoiceMerchantId,
         invoiceMerchantMersisNo: invoiceMerchantMersisNo ?? this.invoiceMerchantMersisNo,
         invoiceMerchantName: invoiceMerchantName ?? this.invoiceMerchantName,
-        invoiceMerchantSicilNo: invoiceMerchantSicilNo ?? this.invoiceMerchantSicilNo,
         invoiceMerchantTaxNo: invoiceMerchantTaxNo ?? this.invoiceMerchantTaxNo,
         invoiceMerchantTaxOffice: invoiceMerchantTaxOffice ?? this.invoiceMerchantTaxOffice,
         invoiceMerchantTelephone: invoiceMerchantTelephone ?? this.invoiceMerchantTelephone,
@@ -389,7 +486,6 @@ class PCInvoiceMerchantModel {
         invoiceMerchantId: json["invoiceMerchantId"],
         invoiceMerchantMersisNo: json["invoiceMerchantMersisNo"],
         invoiceMerchantName: json["invoiceMerchantName"],
-        invoiceMerchantSicilNo: json["invoiceMerchantSicilNo"],
         invoiceMerchantTaxNo: json["invoiceMerchantTaxNo"],
         invoiceMerchantTaxOffice: json["invoiceMerchantTaxOffice"],
         invoiceMerchantTelephone: json["invoiceMerchantTelephone"],
@@ -406,7 +502,6 @@ class PCInvoiceMerchantModel {
         "invoiceMerchantId": invoiceMerchantId,
         "invoiceMerchantMersisNo": invoiceMerchantMersisNo,
         "invoiceMerchantName": invoiceMerchantName,
-        "invoiceMerchantSicilNo": invoiceMerchantSicilNo,
         "invoiceMerchantTaxNo": invoiceMerchantTaxNo,
         "invoiceMerchantTaxOffice": invoiceMerchantTaxOffice,
         "invoiceMerchantTelephone": invoiceMerchantTelephone,
@@ -414,36 +509,16 @@ class PCInvoiceMerchantModel {
       };
 }
 
-class PCOperationResultModel {
-  PCOperationResultModel({
-    this.resultCode,
-    this.resultDesc,
-  });
-
-  String? resultCode;
-  String? resultDesc;
-
-  PCOperationResultModel copyWith({
-    String? resultCode,
-    String? resultDesc,
-  }) =>
-      PCOperationResultModel(
-        resultCode: resultCode ?? this.resultCode,
-        resultDesc: resultDesc ?? this.resultDesc,
-      );
-
-  factory PCOperationResultModel.fromJson(Map<String, dynamic> json) => PCOperationResultModel(
-        resultCode: json["resultCode"],
-        resultDesc: json["resultDesc"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "resultCode": resultCode,
-        "resultDesc": resultDesc,
-      };
-}
-
 class PCProductListModel {
+  String? birim;
+  String? birimFiyat;
+  String? kdvTutari;
+  String? kdvOrani;
+  String? malHizmet;
+  String? miktar;
+  String? productId;
+  String? toplamKdvTutari;
+
   PCProductListModel({
     this.birim,
     this.birimFiyat,
@@ -454,15 +529,6 @@ class PCProductListModel {
     this.productId,
     this.toplamKdvTutari,
   });
-
-  String? birim;
-  String? birimFiyat;
-  String? kdvTutari;
-  String? kdvOrani;
-  String? malHizmet;
-  String? miktar;
-  String? productId;
-  String? toplamKdvTutari;
 
   PCProductListModel copyWith({
     String? birim,
