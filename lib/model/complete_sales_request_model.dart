@@ -16,7 +16,7 @@ class PCCompleteSalesRequestModel {
   /// Milisaniye cinsinden slipler arası bekleme süresinin ne kadar olacağı belirlenecek.
   int slipEstimatedTime = 1000;
 
-  int bankSlipEstimatedTime = 6000;
+  int bankSlipEstimatedTime = 10;
 
   /// İşlem sonlandırmak istenden durumudur. “1”: İşlem başarılı “2”: İşlem başarısız
   int transactionResult;

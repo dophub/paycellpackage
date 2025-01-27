@@ -198,7 +198,7 @@ class PaycellposPlugin {
 
       final PcGetPaymentDetailResponseModel result = PcGetPaymentDetailResponseModel().jsonParser(response);
 
-      if (result.transactionStatus?.errorCode == '200') {
+      if (result.operationResult?.resultCode == '200') {
         onSuccess?.call(result);
       } else {
         onNotSuccess?.call(result);
