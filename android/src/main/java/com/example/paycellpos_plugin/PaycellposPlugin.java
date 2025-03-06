@@ -100,6 +100,7 @@ public class PaycellposPlugin implements FlutterPlugin, MethodCallHandler, Activ
     @Override
     public boolean onNewIntent(@NonNull Intent intent) {
         try {
+            if (list.isEmpty()) return true;
             String message = "";
             message = intent.getData().getQueryParameter("message");
             MethodChannel.Result result = list.get(0);
